@@ -1,11 +1,15 @@
 import {Given, When, Then, Before, After, AfterAll} from 'cucumber';
 import {BrowserDrv} from '../main/common/BrowserDrv';
 import {HomePage} from '../main/page_objects/homepage';
+import { LoginPage } from '../main/page_objects/loginpage';
 
-Before(() => {
+let homepage = null;
+let loginpage = null;
+
+Before( async () => {
   console.warn(">> Trigger before");
-  BrowserDrv.setDriver();
-  BrowserDrv.getDriver().manage().window().maximize();
+  await BrowserDrv.setDriver();
+  await BrowserDrv.getDriver().manage().window().maximize();
 });
 
 After(async () => {
@@ -13,18 +17,21 @@ After(async () => {
   await BrowserDrv.getDriver().quit();
 });
 
-When(/^"([^"]*)" is opened$/, (url) => {
+When(/^"([^"]*)" is opened$/,async (url) => {
     console.warn(">> Trigger URL opening..");
-    BrowserDrv.getDriver().get(url);
-  });
+    await BrowserDrv.getDriver().get(url);
+});
           
   
-  Then(/^that user is in the twitter login page$/, () => {
-    
-  });
+Then(/^that user is in the twitter login page$/,async () => {
+  console.warn(">> checking if we're in the homepage...");
+  homepage = await new HomePage(BrowserDrv.getDriver());
+  await homepage.ClickLogin();
+});
   
-  Then(/^that the registered user provided "([^"]*)" and password "([^"]*)"$/, function(userName, passWord) {
+Then(/^that the registered user provided "([^"]*)" and password "([^"]*)"$/, async (userName, passWord) => {
     console.warn(">> Entering username and password");
-    let homepage = new HomePage(BrowserDrv.getDriver());
-    homepage.ClickLogin();
-  });
+    loginpage = await new LoginPage(BrowserDrv.getDriver());
+    await loginpage.InputUsernamePassword(userName, passWord);
+    
+});

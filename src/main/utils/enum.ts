@@ -1,4 +1,5 @@
 export enum LocTypes{
     xpath = "xpath",
-    id = "id"
+    id = "id",
+    css = "css"
 }
