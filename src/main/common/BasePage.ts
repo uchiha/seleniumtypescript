@@ -4,7 +4,7 @@ import {LocTypes} from '../utils/enum';
 export class BasePage{
 
     private _driver : WebDriver;
-    private timeOut : number = 10;
+    private timeOut : number = 10000;
     constructor(driver : WebDriver) {
         this._driver = driver;
     }
@@ -24,6 +24,15 @@ export class BasePage{
         return elem;
     }
 
+    protected waitUntilXpathElementIsStale(locator : string) : any{
+        var elem = this._driver.wait(until.stalenessOf(this._driver.findElement(By.xpath(locator))), this.timeOut).then((el) => {
+            return el;
+        });
+        return elem;
+    }
+
+
+
     protected async click(locator: string, loctype : LocTypes, className : string){
         switch(loctype){
             case LocTypes.xpath:
@@ -38,6 +47,12 @@ export class BasePage{
                 await this.getElementById(locator).click();
                }catch(error){
                    console.error("[Error from PageObj ->\"" + className + "\"]Element of id type: \"" + locator + "\" is not visible.")
+               }
+            case LocTypes.css:
+               try{
+                await this.getElementByCss(locator).click();
+               }catch(error){
+                   console.error("[Error from PageObj ->\"" + className + "\"]Element of css type: \"" + locator + "\" is not visible.")
                }
         }
     }
