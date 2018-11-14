@@ -1,5 +1,6 @@
 import {WebDriver, By, until, WebElement, ISize} from 'selenium-webdriver';
 import {LocTypes} from '../utils/enum';
+import { LocatorWrapper } from '../utils/LocatorWrapper';
 
 export class BasePage{
 
@@ -80,4 +81,51 @@ export class BasePage{
                }
         }
     }
+
+    //############################# the modifications for LocatorWrapper #############################
+    protected getByObjectFromLocWrap(locWrp : LocatorWrapper) : By{
+        let theByObject : By;
+
+        switch(locWrp.elementType){
+            case LocTypes.xpath : {
+                theByObject = By.xpath(locWrp.elementValue);
+                break;
+            }
+            case LocTypes.id : {
+                theByObject = By.id(locWrp.elementValue);
+                break;
+            }
+            default : {
+                theByObject = By.css(locWrp.elementValue);
+                break;
+            }
+        }
+        return theByObject;
+    }
+
+    protected findTheElementUntilVisible(wrpObj : LocatorWrapper){
+        return this._driver.wait(until.elementLocated(this.getByObjectFromLocWrap(wrpObj)), this.timeOut);
+    }
+
+    protected async _click(elemWrap : LocatorWrapper){
+        try {
+            await this.findTheElementUntilVisible(elemWrap).click();
+        } catch (error) {
+            console.error(`==> I can't find the "${elemWrap.elementName}"`)
+            throw new Error(`${error} \n ===# The element named "${elemWrap.elementName}" from "${elemWrap.fromPageObject}" page object was not found! #===`);
+        }
+        
+    }
+
+    protected async _type(elemWrap : LocatorWrapper, inputOn : string){
+        try {
+            await this.findTheElementUntilVisible(elemWrap).sendKeys(inputOn);
+        } catch (error) {
+            console.error(`==> I can't find the "${elemWrap.elementName}"`)
+            throw new Error(`${error} \n ===# The element named "${elemWrap.elementName}" from "${elemWrap.fromPageObject}" page object was not found! #===`);
+        }
+        
+    }
+
+    //############################# [END] the modifications for LocatorWrapper #############################
 }

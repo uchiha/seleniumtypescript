@@ -19,6 +19,7 @@ export class HomePage extends BasePage{
     }
 
     public async ClickLogin(){
-        await this.click(this.LOGIN_ELEM.elementValue, LocTypes.xpath, HomePage.name);
+        // await this.click(this.LOGIN_ELEM.elementValue, LocTypes.xpath, HomePage.name);
+        await this._click(this.LOGIN_ELEM);
     }
 }

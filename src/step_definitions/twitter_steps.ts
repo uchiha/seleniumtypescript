@@ -22,7 +22,7 @@ After(async () => {
   await BrowserDrv.getDriver().quit();
 });
 
-When(/^"([^"]*)" is opened$/,async (url) => {
+When(/^"([^"]*)" is opened$/, {timeout: 4 * 5000} ,async (url) => {
     console.warn(">> Trigger URL opening..");
     await BrowserDrv.getDriver().get(url);
 });
@@ -31,7 +31,7 @@ Then(/^some random stuff was generated here$/, () => {
     SharedData.generateFirstLastNames();
 });
   
-Then(/^that user is in the twitter login page$/,async () => {
+Then(/^that user is in the twitter login page$/, {timeout: 4 * 5000}, async () => {
   console.warn("FirstName: " + SharedData.firstname);
   console.warn("LastName: " + SharedData.lastname);
   console.warn(">> checking if we're in the homepage...");
@@ -39,13 +39,13 @@ Then(/^that user is in the twitter login page$/,async () => {
   await homepage.ClickLogin();
 });
   
-Then(/^the registered user provided "([^"]*)" and password "([^"]*)"$/, async (userName, passWord) => {
+Then(/^the registered user provided "([^"]*)" and password "([^"]*)"$/, {timeout: 4 * 5000}, async (userName, passWord) => {
     console.warn(">> Entering username and password");
     loginpage = await new LoginPage(BrowserDrv.getDriver());
     await loginpage.InputUsernamePassword(userName, passWord);
 });
 
-Then(/^the profile dashboard should display "([^"]*)"$/, async (profileName) => {
+Then(/^the profile dashboard should display "([^"]*)"$/, {timeout: 4 * 5000}, async (profileName) => {
     console.warn(">> Entering username and password");
     dashboardPage = await new DashboardPage(BrowserDrv.getDriver());
     expect( await dashboardPage.getProfileName()).to.equal(profileName);
