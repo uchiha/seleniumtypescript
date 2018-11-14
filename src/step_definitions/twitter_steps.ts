@@ -4,6 +4,7 @@ import {HomePage} from '../main/page_objects/homepage';
 import { LoginPage } from '../main/page_objects/loginpage';
 import { DashboardPage } from '../main/page_objects/dashboard';
 import {expect} from 'chai';
+import {SharedData} from '../main/utils/SharedData';
 
 let homepage = null;
 let loginpage = null;
@@ -17,6 +18,7 @@ Before( async () => {
 
 After(async () => {
   console.warn(">> Trigger after");
+  SharedData.reset();
   await BrowserDrv.getDriver().quit();
 });
 
@@ -24,9 +26,14 @@ When(/^"([^"]*)" is opened$/,async (url) => {
     console.warn(">> Trigger URL opening..");
     await BrowserDrv.getDriver().get(url);
 });
-          
+      
+Then(/^some random stuff was generated here$/, () => {
+    SharedData.generateFirstLastNames();
+});
   
 Then(/^that user is in the twitter login page$/,async () => {
+  console.warn("FirstName: " + SharedData.firstname);
+  console.warn("LastName: " + SharedData.lastname);
   console.warn(">> checking if we're in the homepage...");
   homepage = await new HomePage(BrowserDrv.getDriver());
   await homepage.ClickLogin();

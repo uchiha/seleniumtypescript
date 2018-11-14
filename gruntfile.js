@@ -41,8 +41,6 @@ module.exports =  function (grunt) {
     });
     grunt.loadNpmTasks('grunt-cucumberjs');
     grunt.loadNpmTasks("grunt-ts");
-    // grunt.loadNpmTasks('grunt-mocha');
-    // grunt.registerTask('run_types',['ts'])
     grunt.registerTask('default', ['ts','cucumberjs']);
     
 };
