@@ -1,0 +1,30 @@
+{
+  "name": "seleniumtypescript",
+  "version": "1.0.0",
+  "description": "initial typescript - cucumberjs - selenium webdriver framework",
+  "main": "index.js",
+  "scripts": {
+    "test": ""
+  },
+  "author": "Clarencio Tan",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^7.10.2",
+    "chai": "^4.1.2",
+    "chromedriver": "^2.41.0",
+    "cucumber": "^4.2.1",
+    "grunt": "^1.0.3",
+    "grunt-cucumberjs": "^2.0.2",
+    "grunt-mocha": "^1.1.0",
+    "grunt-ts": "^6.0.0-beta.21",
+    "mocha": "^5.2.0",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.5",
+    "@types/cucumber": "^4.0.4",
+    "@types/mocha": "^5.2.5",
+    "@types/selenium-webdriver": "^3.0.4",
+    "typescript": "^2.7.2"
+  }
+}
