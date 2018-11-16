@@ -10,7 +10,7 @@ export class LoginPage extends BasePage{
     private USER_NAME = new LocatorWrapper("User name input", "(//input[@name='session[username_or_email]'])[2]", LocTypes.xpath, LoginPage.name);
     private PASSWORD = new LocatorWrapper("Password input", "(//input[@name='session[password]'])[2]", LocTypes.xpath, LoginPage.name);
     private SIGNUP_HELP = new LocatorWrapper("Signup help link", "//p[@class='signup-helper']", LocTypes.xpath, LoginPage.name);
-    private LOGIN_BTN = new LocatorWrapper("The Login Button", "button[type='submit]", LocTypes.css, LoginPage.name);
+    private LOGIN_BTN = new LocatorWrapper("The Login Button", "button[type='submit']", LocTypes.css, LoginPage.name);
     // private UserNameLoc : string = "(//input[@name='session[username_or_email]'])[2]";
     // private PasswordLoc : string = "(//input[@name='session[password]'])[2]";
     // private SignupHelpLoc : string = "//p[@class='signup-helper']";

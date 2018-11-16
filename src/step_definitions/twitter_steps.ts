@@ -71,5 +71,13 @@ Then(/^the registered user provided "([^"]*)" and password "([^"]*)"$/, {timeout
 Then(/^the profile dashboard should display "([^"]*)"$/, {timeout: 4 * 5000}, async (profileName) => {
     console.warn(">> Entering username and password");
     dashboardPage = await new DashboardPage(BrowserDrv.getDriver());
-    expect( await dashboardPage.getProfileName()).to.equal(profileName);
+    try {
+      expect( await dashboardPage.getProfileName()).to.equal(profileName);
+    } catch (error) {
+      await BrowserDrv.getDriver().takeScreenshot().then((image: any) => {
+        return BrowserDrv.getWorld().attach(image, "image/png");
+      });
+      throw new Error(error);
+    }
+    
 });
