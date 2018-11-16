@@ -116,7 +116,7 @@ export class BasePage{
                     return BrowserDrv.getWorld().attach(image, "image/png");
             });
             console.error(`==> I can't find the "${elemWrap.elementName}"`)
-            throw new Error(`${error} \n ===# The element named "${elemWrap.elementName}" from "${elemWrap.fromPageObject}" page object was not found! #===`);
+            throw new Error(`===# The element named "${elemWrap.elementName}" from "${elemWrap.fromPageObject}" page object was not found! #===\n${error}`);
         }
         
     }
@@ -129,7 +129,7 @@ export class BasePage{
                 return BrowserDrv.getWorld().attach(image, "image/png");
             });
             console.error(`==> I can't find the "${elemWrap.elementName}"`)
-            throw new Error(`${error} \n ===# The element named "${elemWrap.elementName}" from "${elemWrap.fromPageObject}" page object was not found! #===`);
+            throw new Error(`===# The element named "${elemWrap.elementName}" from "${elemWrap.fromPageObject}" page object was not found! #===\n${error}`);
         }
         
     }
