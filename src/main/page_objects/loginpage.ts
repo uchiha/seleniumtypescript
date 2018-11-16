@@ -7,7 +7,6 @@ import { LocatorWrapper } from '../utils/LocatorWrapper';
 export class LoginPage extends BasePage{
 
     private driver: WebDriver;
-
     private USER_NAME = new LocatorWrapper("User name input", "(//input[@name='session[username_or_email]'])[2]", LocTypes.xpath, LoginPage.name);
     private PASSWORD = new LocatorWrapper("Password input", "(//input[@name='session[password]'])[2]", LocTypes.xpath, LoginPage.name);
     private SIGNUP_HELP = new LocatorWrapper("Signup help link", "//p[@class='signup-helper']", LocTypes.xpath, LoginPage.name);

@@ -5,8 +5,12 @@ module.exports =  function (grunt) {
     grunt.initConfig({
         cucumberjs : {
             options : {
+                name : 'the twitter api!',
+                brandTitle : 'Twitter user functionalities',
                 format : 'html',
-                output : 'my_reports.html',
+                output : 'report/my_reports.html',
+                screenshotsDirectory: 'screenshots/',
+                storeScreenshots : true,
                 theme : 'bootstrap',
                 // theme : 'foundation',
                 require : 'transpiled/step_definitions'

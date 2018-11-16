@@ -1,6 +1,7 @@
 import {WebDriver, By, until, WebElement, ISize} from 'selenium-webdriver';
 import {LocTypes} from '../utils/enum';
 import { LocatorWrapper } from '../utils/LocatorWrapper';
+import {BrowserDrv} from './BrowserDrv';
 
 export class BasePage{
 
@@ -111,6 +112,9 @@ export class BasePage{
         try {
             await this.findTheElementUntilVisible(elemWrap).click();
         } catch (error) {
+            await this._driver.takeScreenshot().then((image: any) => {
+                    return BrowserDrv.getWorld().attach(image, "image/png");
+            });
             console.error(`==> I can't find the "${elemWrap.elementName}"`)
             throw new Error(`${error} \n ===# The element named "${elemWrap.elementName}" from "${elemWrap.fromPageObject}" page object was not found! #===`);
         }
@@ -121,6 +125,9 @@ export class BasePage{
         try {
             await this.findTheElementUntilVisible(elemWrap).sendKeys(inputOn);
         } catch (error) {
+            await this._driver.takeScreenshot().then((image: any) => {
+                return BrowserDrv.getWorld().attach(image, "image/png");
+            });
             console.error(`==> I can't find the "${elemWrap.elementName}"`)
             throw new Error(`${error} \n ===# The element named "${elemWrap.elementName}" from "${elemWrap.fromPageObject}" page object was not found! #===`);
         }

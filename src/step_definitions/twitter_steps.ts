@@ -1,3 +1,4 @@
+
 import {Given, When, Then, Before, After, AfterAll, Status} from 'cucumber';
 import {BrowserDrv} from '../main/common/BrowserDrv';
 import {HomePage} from '../main/page_objects/homepage';
@@ -11,22 +12,33 @@ let homepage = null;
 let loginpage = null;
 let dashboardPage = null;
 
-Before( async () => {
+Before( async function(){
   console.warn(">> Trigger before");
   await BrowserDrv.setDriver();
+  await BrowserDrv.setWorld(this);
   await BrowserDrv.getDriver().manage().window().maximize();
 });
 
-After(async (testCase, scenario) => {
+
+After( async (testCase) =>{
   console.warn(">> Trigger after");
   SharedData.reset();
+  
   if(testCase.result.status === Status.FAILED){
     
-      BrowserDrv.getDriver().takeScreenshot().then((image : any, error : any)=>{
-        fs.writeFile('out.png', image, 'base64', (error) => {
-            console.log(error);
-        });
-      });
+    // take screenshot when test fails...
+      // BrowserDrv.getDriver().takeScreenshot().then((image : any, error : any)=>{
+      //   fs.writeFile('out.png', image, 'base64', (error) => {
+      //       console.log(error);
+      //   });
+      // });
+
+    // works, but the screenshot is in the After step...
+    // BrowserDrv.getDriver().takeScreenshot().then((image: any) => {
+    //     return world.attach(image, "image/png");
+    // });
+   
+
   }
   
   await BrowserDrv.getDriver().quit();
@@ -53,6 +65,7 @@ Then(/^the registered user provided "([^"]*)" and password "([^"]*)"$/, {timeout
     console.warn(">> Entering username and password");
     loginpage = await new LoginPage(BrowserDrv.getDriver());
     await loginpage.InputUsernamePassword(userName, passWord);
+    
 });
 
 Then(/^the profile dashboard should display "([^"]*)"$/, {timeout: 4 * 5000}, async (profileName) => {
