@@ -7,6 +7,7 @@ import { DashboardPage } from '../main/page_objects/dashboard';
 import {expect} from 'chai';
 import {SharedData} from '../main/utils/SharedData';
 import * as fs from 'fs';
+import { Helpers } from '../main/utils/Helpers';
 
 let homepage = null;
 let loginpage = null;
@@ -71,13 +72,15 @@ Then(/^the registered user provided "([^"]*)" and password "([^"]*)"$/, {timeout
 Then(/^the profile dashboard should display "([^"]*)"$/, {timeout: 4 * 5000}, async (profileName) => {
     console.warn(">> Entering username and password");
     dashboardPage = await new DashboardPage(BrowserDrv.getDriver());
+
+    // NOT WORKING ATM... 
+    // let expectedSt = await dashboardPage.getProfileName();
+    // Helpers.Expect(expectedSt, profileName);
+
     try {
       expect( await dashboardPage.getProfileName()).to.equal(profileName);
     } catch (error) {
-      await BrowserDrv.getDriver().takeScreenshot().then((image: any) => {
-        return BrowserDrv.getWorld().attach(image, "image/png");
-      });
-      throw new Error(error);
+      await Helpers.takeScreenshotWhenAssertFail(error);
     }
     
 });
